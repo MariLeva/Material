@@ -1,5 +1,7 @@
 package ru.geekbrains.material.view
 
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +13,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import ru.geekbrains.material.R
 import ru.geekbrains.material.viewmodel.PictureOfTheDayViewModel
 import ru.geekbrains.material.databinding.FragmentPictureOfTheDayBinding
 
@@ -19,7 +20,7 @@ class PictureOfTheDayFragment : Fragment() {
 
     private var _binding: FragmentPictureOfTheDayBinding? = null
     val binding: FragmentPictureOfTheDayBinding
-    get() = _binding!!
+        get() = _binding!!
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
@@ -53,26 +54,36 @@ class PictureOfTheDayFragment : Fragment() {
         viewModel.sendRequest()
 
         setBottomSheetBehavior(binding.bottomSheetFragment.bottomSheetContainer)
+
+        binding.inputLayout.setEndIconOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW).apply {
+                data =
+                    Uri.parse("https://en.wikipedia.org/wiki/${binding.inputEditText.text.toString()}")
+            })
+        }
     }
 
-    private fun renderData(pictureOfTheDayData: PictureOfTheDayData){
-        when (pictureOfTheDayData){
+    private fun renderData(pictureOfTheDayData: PictureOfTheDayData) {
+        when (pictureOfTheDayData) {
             is PictureOfTheDayData.Error -> {}
             is PictureOfTheDayData.Loading -> {}
             is PictureOfTheDayData.Success -> {
                 binding.imageView.load(pictureOfTheDayData.pictureOfTheDayResponseData.url)
-                binding.bottomSheetFragment.title.text = pictureOfTheDayData.pictureOfTheDayResponseData.title
-                binding.bottomSheetFragment.explanation.text = pictureOfTheDayData.pictureOfTheDayResponseData.explanation
+                binding.bottomSheetFragment.title.text =
+                    pictureOfTheDayData.pictureOfTheDayResponseData.title
+                binding.bottomSheetFragment.explanation.text =
+                    pictureOfTheDayData.pictureOfTheDayResponseData.explanation
             }
         }
     }
 
-    private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout){
+    private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback(){
+        bottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when (newState){
+                when (newState) {
                     BottomSheetBehavior.STATE_DRAGGING -> {}
                     BottomSheetBehavior.STATE_COLLAPSED -> {}
                     BottomSheetBehavior.STATE_EXPANDED -> {}
@@ -85,7 +96,6 @@ class PictureOfTheDayFragment : Fragment() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 Log.d("@@@", "$slideOffset")
             }
-
         })
     }
 
