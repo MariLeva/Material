@@ -6,5 +6,5 @@
     <dimen name="bottom_sheet_tv_padding">10dp</dimen>
     <dimen name="bottom_sheet_behavior_peek">50dp</dimen>
     <dimen name="input_layout_width">0dp</dimen>
-    <dimen name="text_size">18sp</dimen>
+    <dimen name="text_size">16sp</dimen>
 </resources>
