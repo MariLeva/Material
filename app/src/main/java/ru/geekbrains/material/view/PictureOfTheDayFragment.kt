@@ -5,14 +5,14 @@ import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import ru.geekbrains.material.MainActivity
+import ru.geekbrains.material.R
 import ru.geekbrains.material.viewmodel.PictureOfTheDayViewModel
 import ru.geekbrains.material.databinding.FragmentPictureOfTheDayBinding
 
@@ -61,6 +61,9 @@ class PictureOfTheDayFragment : Fragment() {
                     Uri.parse("https://en.wikipedia.org/wiki/${binding.inputEditText.text.toString()}")
             })
         }
+
+        (requireActivity() as MainActivity).setSupportActionBar(binding.bottomAppBar)
+        setHasOptionsMenu(true)
     }
 
     private fun renderData(pictureOfTheDayData: PictureOfTheDayData) {
@@ -97,6 +100,30 @@ class PictureOfTheDayFragment : Fragment() {
                 Log.d("@@@", "$slideOffset")
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_bottom_bar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.app_bar_fav -> {
+                Log.d("@@@", "app_bar_fav")
+            }
+            R.id.app_bar_setting -> {
+                Log.d("@@@", "app_bar_setting")
+            }
+            android.R.id.home -> {
+                BottomNavigationDrawerFragment().show(
+                    requireActivity().supportFragmentManager,
+                    "tag"
+                )
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

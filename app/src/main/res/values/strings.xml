@@ -5,4 +5,8 @@
     <string name="bottom_sheet_tv_explanation">This lovely star field spans some four full moons.</string>
     <string name="search_wiki">Найти в Википедии</string>
     <string name="wiki_helper_text">Поищите термин в википедии</string>
+    <string name="favourite">favourite</string>
+    <string name="settings">settings</string>
+    <string name="navigation_one">На экран 1</string>
+    <string name="navigation_two">На экран 2</string>
 </resources>

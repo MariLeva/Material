@@ -4,7 +4,8 @@
     <dimen name="bottom_sheet_line_height">1dp</dimen>
     <dimen name="bottom_sheet_line_margin">5dp</dimen>
     <dimen name="bottom_sheet_tv_padding">10dp</dimen>
-    <dimen name="bottom_sheet_behavior_peek">50dp</dimen>
+    <dimen name="bottom_sheet_behavior_peek">100dp</dimen>
     <dimen name="input_layout_width">0dp</dimen>
     <dimen name="text_size">16sp</dimen>
+    <dimen name="margin_navigation_view">8dp</dimen>
 </resources>
