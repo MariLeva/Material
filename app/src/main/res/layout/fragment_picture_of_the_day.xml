@@ -8,6 +8,7 @@
     tools:context=".view.PictureOfTheDayFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/picture_of_the_day"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingStart="@dimen/bottom_sheet_tv_padding"
@@ -96,5 +97,18 @@
         android:src="@drawable/ic_plus_fab"
         android:tint="@color/blue_gray_100"
         app:layout_anchor="@id/bottom_app_bar" />
+
+    <FrameLayout
+        android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

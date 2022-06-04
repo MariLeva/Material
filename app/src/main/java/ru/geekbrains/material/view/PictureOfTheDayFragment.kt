@@ -6,12 +6,14 @@ import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
+import com.google.android.material.snackbar.Snackbar
 import ru.geekbrains.material.MainActivity
 import ru.geekbrains.material.R
 import ru.geekbrains.material.viewmodel.PictureOfTheDayViewModel
@@ -85,17 +87,23 @@ class PictureOfTheDayFragment : Fragment() {
     }
 
     private fun renderData(pictureOfTheDayData: PictureOfTheDayData) {
-        when (pictureOfTheDayData) {
-            is PictureOfTheDayData.Error -> {
-                Log.d("@@@", "Ошибка загрузки!")
-            }
-            is PictureOfTheDayData.Loading -> {}
-            is PictureOfTheDayData.Success -> {
-                binding.imageView.load(pictureOfTheDayData.pictureOfTheDayResponseData.url)
-                binding.bottomSheetFragment.title.text =
-                    pictureOfTheDayData.pictureOfTheDayResponseData.title
-                binding.bottomSheetFragment.explanation.text =
-                    pictureOfTheDayData.pictureOfTheDayResponseData.explanation
+        with(binding) {
+            when (pictureOfTheDayData) {
+                is PictureOfTheDayData.Error -> {
+                    loadingLayout.visibility = View.GONE
+                    Toast.makeText(context,"Не удалось ${pictureOfTheDayData}!", Toast.LENGTH_LONG).show()
+                }
+                is PictureOfTheDayData.Loading -> {
+                    loadingLayout.visibility = View.VISIBLE
+                }
+                is PictureOfTheDayData.Success -> {
+                    loadingLayout.visibility = View.GONE
+                    imageView.load(pictureOfTheDayData.pictureOfTheDayResponseData.url)
+                    bottomSheetFragment.title.text =
+                        pictureOfTheDayData.pictureOfTheDayResponseData.title
+                    bottomSheetFragment.explanation.text =
+                        pictureOfTheDayData.pictureOfTheDayResponseData.explanation
+                }
             }
         }
     }
@@ -117,7 +125,7 @@ class PictureOfTheDayFragment : Fragment() {
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                Log.d("@@@", "$slideOffset")
+                Snackbar.make(binding.pictureOfTheDay, "$slideOffset", Snackbar.LENGTH_INDEFINITE)
             }
         })
     }
