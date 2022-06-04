@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.chip.Chip
 import ru.geekbrains.material.MainActivity
 import ru.geekbrains.material.R
 import ru.geekbrains.material.viewmodel.PictureOfTheDayViewModel
@@ -19,7 +20,7 @@ import ru.geekbrains.material.databinding.FragmentPictureOfTheDayBinding
 class PictureOfTheDayFragment : Fragment() {
 
     private var _binding: FragmentPictureOfTheDayBinding? = null
-    val binding: FragmentPictureOfTheDayBinding
+    private val binding: FragmentPictureOfTheDayBinding
         get() = _binding!!
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
@@ -64,11 +65,30 @@ class PictureOfTheDayFragment : Fragment() {
 
         (requireActivity() as MainActivity).setSupportActionBar(binding.bottomAppBar)
         setHasOptionsMenu(true)
+
+        binding.chipGroup.setOnCheckedChangeListener { group, position ->
+            when (position) {
+                2131231228 -> {
+                    viewModel.sendRequest()
+                }
+                2131231229 -> {
+                    viewModel.sendRequestYesterday()
+                }
+                2131231227 -> {
+                    viewModel.sendRequestTYheDayBeforeYesterday()
+                }
+            }
+            group.findViewById<Chip>(position)?.let {
+                Log.d("@@@", "${it.text.toString()} $position")
+            }
+        }
     }
 
     private fun renderData(pictureOfTheDayData: PictureOfTheDayData) {
         when (pictureOfTheDayData) {
-            is PictureOfTheDayData.Error -> {}
+            is PictureOfTheDayData.Error -> {
+                Log.d("@@@", "Ошибка загрузки!")
+            }
             is PictureOfTheDayData.Loading -> {}
             is PictureOfTheDayData.Success -> {
                 binding.imageView.load(pictureOfTheDayData.pictureOfTheDayResponseData.url)

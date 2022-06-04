@@ -1,5 +1,6 @@
 package ru.geekbrains.material.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,11 +11,14 @@ import ru.geekbrains.material.BuildConfig
 import ru.geekbrains.material.repository.PictureOfTheDayResponseData
 import ru.geekbrains.material.repository.PictureOfTheDayRetrofitImpl
 import ru.geekbrains.material.view.PictureOfTheDayData
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PictureOfTheDayViewModel(
     private val liveData: MutableLiveData<PictureOfTheDayData> = MutableLiveData(),
     private val pictureOfTheDayRetrofitImpl: PictureOfTheDayRetrofitImpl = PictureOfTheDayRetrofitImpl()
 ) : ViewModel() {
+    private val sdf = SimpleDateFormat("yyyy-MM-dd")
 
     fun getLiveData(): LiveData<PictureOfTheDayData>{
         return liveData
@@ -27,6 +31,26 @@ class PictureOfTheDayViewModel(
             PictureOfTheDayData.Error(Throwable("Нет API key!"))
         } else {
             pictureOfTheDayRetrofitImpl.getRetrofit().getPictureOfTheDay(apiKey).enqueue(callback)
+        }
+    }
+
+    fun sendRequestYesterday(){
+        liveData.postValue(PictureOfTheDayData.Loading(null))
+        val apiKey: String = BuildConfig.NASA_API_KEY
+        if (apiKey.isBlank()){
+            PictureOfTheDayData.Error(Throwable("Нет API key!"))
+        } else {
+            pictureOfTheDayRetrofitImpl.getRetrofit().getPictureOfTheYesterday(apiKey, getDate(-1)).enqueue(callback)
+        }
+    }
+
+    fun sendRequestTYheDayBeforeYesterday(){
+        liveData.postValue(PictureOfTheDayData.Loading(null))
+        val apiKey: String = BuildConfig.NASA_API_KEY
+        if (apiKey.isBlank()){
+            PictureOfTheDayData.Error(Throwable("Нет API key!"))
+        } else {
+            pictureOfTheDayRetrofitImpl.getRetrofit().getPictureOfTheDayBeforeYesterday(apiKey, getDate(-2)).enqueue(callback)
         }
     }
 
@@ -53,4 +77,11 @@ class PictureOfTheDayViewModel(
         }
 
     }
+
+    private fun getDate(int: Int): String{
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.add(Calendar.DATE, int)
+        return sdf.format(calendar.time).toString()
+    }
+
 }

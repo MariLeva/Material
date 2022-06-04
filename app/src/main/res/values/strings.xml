@@ -9,4 +9,7 @@
     <string name="settings">settings</string>
     <string name="navigation_one">На экран 1</string>
     <string name="navigation_two">На экран 2</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="the_day_before_yesterday">The day before yesterday</string>
 </resources>

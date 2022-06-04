@@ -14,10 +14,16 @@
         <!-- Customize your theme here. -->
         <item name="android:textSize">@dimen/text_size</item>
         <item name="textInputStyle">@style/TextInputLayout</item>
+        <item name="chipStyle">@style/ChipStyle</item>
     </style>
 
     <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/blue_gray_900</item>
         <item name="errorTextColor">#880E4F</item>
+    </style>
+
+    <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/blue_gray_200</item>
+        <item name="rippleColor">@color/blue_gray_500</item>
     </style>
 </resources>
