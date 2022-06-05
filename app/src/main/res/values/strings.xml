@@ -12,4 +12,9 @@
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
     <string name="the_day_before_yesterday">The day before yesterday</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="theme_pink">Pink</string>
+    <string name="theme_blue_grey">Blue grey</string>
+    <string name="theme_brown">Brown</string>
 </resources>

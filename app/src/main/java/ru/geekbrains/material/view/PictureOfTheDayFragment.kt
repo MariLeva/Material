@@ -18,6 +18,7 @@ import ru.geekbrains.material.MainActivity
 import ru.geekbrains.material.R
 import ru.geekbrains.material.viewmodel.PictureOfTheDayViewModel
 import ru.geekbrains.material.databinding.FragmentPictureOfTheDayBinding
+import ru.geekbrains.material.settings.SettingsFragment
 
 class PictureOfTheDayFragment : Fragment() {
 
@@ -141,7 +142,7 @@ class PictureOfTheDayFragment : Fragment() {
                 Log.d("@@@", "app_bar_fav")
             }
             R.id.app_bar_setting -> {
-                Log.d("@@@", "app_bar_setting")
+                requireActivity().supportFragmentManager.beginTransaction().addToBackStack("").add(R.id.container, SettingsFragment.newInstance()).commit()
             }
             android.R.id.home -> {
                 BottomNavigationDrawerFragment().show(

@@ -81,6 +81,7 @@ class PictureOfTheDayViewModel(
     private fun getDate(int: Int): String{
         val calendar: Calendar = Calendar.getInstance()
         calendar.add(Calendar.DATE, int)
+        Log.d("@@@", sdf.format(calendar.time).toString())
         return sdf.format(calendar.time).toString()
     }
 

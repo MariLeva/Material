@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">?boxStrokeColor</item>
+        <item name="errorTextColor">#880E4F</item>
+    </style>
+
+    <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">?chipBackgroundColor</item>
+        <item name="rippleColor">?rippleColor</item>
+    </style>
+
+    <style name="MyTabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="android:background">?colorSecondary</item>
+    </style>
+</resources>
