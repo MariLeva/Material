@@ -71,13 +71,13 @@ class PictureOfTheDayFragment : Fragment() {
 
         binding.chipGroup.setOnCheckedChangeListener { group, position ->
             when (position) {
-                2131231228 -> {
+                R.id.chip_today -> {
                     viewModel.sendRequest()
                 }
-                2131231229 -> {
+                R.id.chip_yesterday -> {
                     viewModel.sendRequestYesterday()
                 }
-                2131231227 -> {
+                R.id.chip_the_day_before_yesterday -> {
                     viewModel.sendRequestTYheDayBeforeYesterday()
                 }
             }

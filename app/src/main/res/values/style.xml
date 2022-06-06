@@ -8,6 +8,7 @@
     <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="chipBackgroundColor">?chipBackgroundColor</item>
         <item name="rippleColor">?rippleColor</item>
+        <item name="android:textAppearance">?fontFamily</item>
     </style>
 
     <style name="MyTabLayout" parent="Widget.MaterialComponents.TabLayout">

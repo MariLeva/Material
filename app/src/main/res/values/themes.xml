@@ -16,6 +16,7 @@
         <item name="textInputStyle">@style/TextInputLayout</item>
         <item name="chipStyle">@style/ChipStyle</item>
         <item name="tabStyle">@style/MyTabLayout</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">true</item>
     </style>
 
     <style name="MyPinkTheme" parent="MyBaseTheme">
