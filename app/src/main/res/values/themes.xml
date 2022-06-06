@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Material" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="MyBaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">?colorPrimary</item>
         <item name="colorPrimaryVariant">?colorPrimaryVariant</item>
@@ -18,7 +18,7 @@
         <item name="tabStyle">@style/MyTabLayout</item>
     </style>
 
-    <style name="MyPinkTheme" parent="Theme.Material">
+    <style name="MyPinkTheme" parent="MyBaseTheme">
         <item name="colorPrimary">@color/pink_500</item>
         <item name="colorPrimaryVariant">@color/pink_700</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -29,9 +29,12 @@
         <item name="errorTextColor">#880E4F</item>
         <item name="chipBackgroundColor">@color/pink_200</item>
         <item name="rippleColor">@color/pink_500</item>
+        <item name="background">@color/pink_50</item>
+        <item name="backgroundSheetLayout">@color/pink_100</item>
+        <item name="fontFamily">@font/chela_one</item>
     </style>
 
-    <style name="MyBlueGreyTheme" parent="Theme.Material">
+    <style name="MyBlueGreyTheme" parent="MyBaseTheme">
         <item name="colorPrimary">@color/blue_gray_500</item>
         <item name="colorPrimaryVariant">@color/blue_gray_700</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -43,9 +46,11 @@
         <item name="chipBackgroundColor">@color/blue_gray_200</item>
         <item name="rippleColor">@color/blue_gray_500</item>
         <item name="background">@color/blue_gray_50</item>
+        <item name="backgroundSheetLayout">@color/blue_gray_100</item>
+        <item name="fontFamily">@font/aclonica</item>
     </style>
 
-    <style name="MyBrownTheme" parent="Theme.Material">
+    <style name="MyBrownTheme" parent="MyBaseTheme">
         <item name="colorPrimary">@color/brown_500</item>
         <item name="colorPrimaryVariant">@color/brown_700</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -56,5 +61,8 @@
         <item name="errorTextColor">#880E4F</item>
         <item name="chipBackgroundColor">@color/brown_200</item>
         <item name="rippleColor">@color/brown_500</item>
+        <item name="background">@color/brown_50</item>
+        <item name="backgroundSheetLayout">@color/brown_100</item>
+        <item name="fontFamily">@font/griffy</item>
     </style>
 </resources>
