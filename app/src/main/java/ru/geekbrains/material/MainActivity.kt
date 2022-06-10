@@ -36,16 +36,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getRealStyle(currentTheme: Int): Int {
-        val currentThemeNight = resources.configuration.uiMode
-        return if (currentThemeNight == Configuration.UI_MODE_NIGHT_YES) {
-            R.style.MyBaseThemeNight
-        } else {
-            when (currentTheme) {
-                MyPinkTheme -> R.style.MyPinkTheme
-                MyBlueGreyTheme -> R.style.MyBlueGreyTheme
-                MyBrownTheme -> R.style.MyBrownTheme
-                else -> 0
-            }
+        return when (currentTheme) {
+            MyPinkTheme -> R.style.MyPinkTheme
+            MyBrownTheme -> R.style.MyBrownTheme
+            else ->  R.style.MyBlueGreyTheme
         }
     }
 }
