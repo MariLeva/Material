@@ -18,6 +18,7 @@ import ru.geekbrains.material.MainActivity
 import ru.geekbrains.material.R
 import ru.geekbrains.material.viewmodel.PictureOfTheDayViewModel
 import ru.geekbrains.material.databinding.FragmentPictureOfTheDayBinding
+import ru.geekbrains.material.navigation.ApiActivity
 import ru.geekbrains.material.settings.SettingsFragment
 
 class PictureOfTheDayFragment : Fragment() {
@@ -56,7 +57,6 @@ class PictureOfTheDayFragment : Fragment() {
             renderData(it)
         })
         viewModel.sendRequest()
-
         setBottomSheetBehavior(binding.bottomSheetFragment.bottomSheetContainer)
 
         binding.inputLayout.setEndIconOnClickListener {
@@ -92,7 +92,8 @@ class PictureOfTheDayFragment : Fragment() {
             when (pictureOfTheDayData) {
                 is PictureOfTheDayData.Error -> {
                     loadingLayout.visibility = View.GONE
-                    Toast.makeText(context,"Не удалось ${pictureOfTheDayData}!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Не удалось ${pictureOfTheDayData}!", Toast.LENGTH_LONG)
+                        .show()
                 }
                 is PictureOfTheDayData.Loading -> {
                     loadingLayout.visibility = View.VISIBLE
@@ -142,17 +143,16 @@ class PictureOfTheDayFragment : Fragment() {
                 Log.d("@@@", "app_bar_fav")
             }
             R.id.app_bar_setting -> {
-                requireActivity().supportFragmentManager.beginTransaction().addToBackStack("").add(R.id.container, SettingsFragment.newInstance()).commit()
+                requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
+                    .add(R.id.container, SettingsFragment.newInstance()).commit()
             }
             android.R.id.home -> {
                 BottomNavigationDrawerFragment().show(
                     requireActivity().supportFragmentManager,
                     "tag"
                 )
-
             }
         }
-        return super.onOptionsItemSelected(item)
+            return super.onOptionsItemSelected(item)
+        }
     }
-
-}

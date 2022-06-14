@@ -7,8 +7,8 @@
     <string name="wiki_helper_text">Look up the term on wikipedia</string>
     <string name="favourite">favourite</string>
     <string name="settings">settings</string>
-    <string name="navigation_one">To Screen 1</string>
-    <string name="navigation_two">To Screen 2</string>
+    <string name="navigation_one">Main Activity</string>
+    <string name="navigation_two">Api Activity</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
     <string name="the_day_before_yesterday">The day before yesterday</string>

@@ -1,13 +1,15 @@
 package ru.geekbrains.material.view
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import ru.geekbrains.material.MainActivity
 import ru.geekbrains.material.R
 import ru.geekbrains.material.databinding.BottomNavigationLayoutBinding
+import ru.geekbrains.material.navigation.ApiActivity
 
 class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
 
@@ -25,17 +27,21 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.designNavigationView.setNavigationItemSelectedListener {
-            when (it.itemId) {
+        binding.designNavigationView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
                 R.id.navigation_one -> {
-                    Log.d("@@@", R.string.navigation_one.toString())
+                    startActivity(Intent(requireContext(), MainActivity::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
+                    true
                 }
                 R.id.navigation_two -> {
-                    Log.d("@@@", R.string.navigation_two.toString())
+                    startActivity(Intent(requireContext(), ApiActivity::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
+                    true
                 }
+                else ->
+                    true
             }
-            true
         }
     }
 

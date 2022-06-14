@@ -11,7 +11,7 @@
         <item name="android:textAppearance">?fontFamily</item>
     </style>
 
-    <style name="MyTabLayout" parent="Widget.MaterialComponents.TabLayout">
+    <style name="MyTabLayout" parent="Widget.Design.TabLayout">
         <item name="android:background">?colorSecondary</item>
     </style>
 </resources>
