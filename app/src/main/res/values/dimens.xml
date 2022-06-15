@@ -10,4 +10,5 @@
     <dimen name="margin_navigation_view">8dp</dimen>
     <dimen name="width_height_indicator">8dp</dimen>
     <dimen name="margin_image_view_indicator">7dp</dimen>
+    <dimen name="margin_15dp">15dp</dimen>
 </resources>

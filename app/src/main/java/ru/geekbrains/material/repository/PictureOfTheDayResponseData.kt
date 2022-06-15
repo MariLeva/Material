@@ -14,3 +14,9 @@ data class MarsServerResponseData(
     @field:SerializedName("img_src")
     val imgSrc: String
 )
+
+data class EarthServerResponseData(
+    val caption: String,
+    val image: String,
+    val date: String
+)

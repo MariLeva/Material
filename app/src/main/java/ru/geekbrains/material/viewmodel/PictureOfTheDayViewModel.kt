@@ -8,6 +8,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import ru.geekbrains.material.BuildConfig
+import ru.geekbrains.material.repository.EarthServerResponseData
 import ru.geekbrains.material.repository.PictureOfTheDayResponseData
 import ru.geekbrains.material.repository.PictureOfTheDayRetrofitImpl
 import ru.geekbrains.material.view.PictureOfTheDayData
@@ -62,6 +63,40 @@ class PictureOfTheDayViewModel(
         else
             pictureOfTheDayRetrofitImpl.getRetrofit().getPictureOfTheMars("100", "fhaz",apiKey)
                 .enqueue(callback)
+    }
+
+    fun sendRequestTheEarthEPIC(){
+        liveData.postValue(PictureOfTheDayData.Loading(null))
+        val apiKey: String = BuildConfig.NASA_API_KEY
+        if (apiKey.isBlank())
+            PictureOfTheDayData.Error(Throwable("Нет API key!"))
+        else
+            pictureOfTheDayRetrofitImpl.getRetrofit().getPictureNaturalEPIC(apiKey)
+                .enqueue(callbackEPIC)
+    }
+
+    private val callbackEPIC = object  : Callback<List<EarthServerResponseData>>{
+        override fun onResponse(
+            call: Call<List<EarthServerResponseData>>,
+            response: Response<List<EarthServerResponseData>>
+        ) {
+            if (response.isSuccessful){
+                response.body()?.let {
+                    liveData.postValue(PictureOfTheDayData.SuccessEarth(it))
+                }
+            }else {
+                if (response.message().isNullOrEmpty()){
+                    liveData.postValue(PictureOfTheDayData.Error(Throwable("Неидентифицированное поле!")))
+                } else {
+                    liveData.postValue(PictureOfTheDayData.Error(Throwable(response.message())))
+                }
+            }
+        }
+
+        override fun onFailure(call: Call<List<EarthServerResponseData>>, t: Throwable) {
+            liveData.postValue(PictureOfTheDayData.Error(t))
+        }
+
     }
 
     private val callback = object : Callback<PictureOfTheDayResponseData> {
