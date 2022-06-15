@@ -54,6 +54,16 @@ class PictureOfTheDayViewModel(
         }
     }
 
+    fun sendRequestTheMars() {
+        liveData.postValue(PictureOfTheDayData.Loading(null))
+        val apiKey: String = BuildConfig.NASA_API_KEY
+        if (apiKey.isBlank())
+            PictureOfTheDayData.Error(Throwable("Нет API key!"))
+        else
+            pictureOfTheDayRetrofitImpl.getRetrofit().getPictureOfTheMars("100", "fhaz",apiKey)
+                .enqueue(callback)
+    }
+
     private val callback = object : Callback<PictureOfTheDayResponseData> {
         override fun onResponse(
             call: Call<PictureOfTheDayResponseData>,
