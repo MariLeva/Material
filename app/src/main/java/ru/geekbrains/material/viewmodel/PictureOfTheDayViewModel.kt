@@ -8,6 +8,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import ru.geekbrains.material.BuildConfig
+import ru.geekbrains.material.navigation.TehTransferFragment
 import ru.geekbrains.material.repository.EarthServerResponseData
 import ru.geekbrains.material.repository.PictureOfTheDayResponseData
 import ru.geekbrains.material.repository.PictureOfTheDayRetrofitImpl
@@ -21,37 +22,39 @@ class PictureOfTheDayViewModel(
 ) : ViewModel() {
     private val sdf = SimpleDateFormat("yyyy-MM-dd")
 
-    fun getLiveData(): LiveData<PictureOfTheDayData>{
+    fun getLiveData(): LiveData<PictureOfTheDayData> {
         return liveData
     }
 
-    fun sendRequest(){
+    fun sendRequest() {
         liveData.postValue(PictureOfTheDayData.Loading(null))
         val apiKey: String = BuildConfig.NASA_API_KEY
-        if (apiKey.isBlank()){
+        if (apiKey.isBlank()) {
             PictureOfTheDayData.Error(Throwable("Нет API key!"))
         } else {
             pictureOfTheDayRetrofitImpl.getRetrofit().getPictureOfTheDay(apiKey).enqueue(callback)
         }
     }
 
-    fun sendRequestYesterday(){
+    fun sendRequestYesterday() {
         liveData.postValue(PictureOfTheDayData.Loading(null))
         val apiKey: String = BuildConfig.NASA_API_KEY
-        if (apiKey.isBlank()){
+        if (apiKey.isBlank()) {
             PictureOfTheDayData.Error(Throwable("Нет API key!"))
         } else {
-            pictureOfTheDayRetrofitImpl.getRetrofit().getPictureOfTheYesterday(apiKey, getDate(-1)).enqueue(callback)
+            pictureOfTheDayRetrofitImpl.getRetrofit().getPictureOfTheYesterday(apiKey, getDate(-1))
+                .enqueue(callback)
         }
     }
 
-    fun sendRequestTYheDayBeforeYesterday(){
+    fun sendRequestTYheDayBeforeYesterday() {
         liveData.postValue(PictureOfTheDayData.Loading(null))
         val apiKey: String = BuildConfig.NASA_API_KEY
-        if (apiKey.isBlank()){
+        if (apiKey.isBlank()) {
             PictureOfTheDayData.Error(Throwable("Нет API key!"))
         } else {
-            pictureOfTheDayRetrofitImpl.getRetrofit().getPictureOfTheDayBeforeYesterday(apiKey, getDate(-2)).enqueue(callback)
+            pictureOfTheDayRetrofitImpl.getRetrofit()
+                .getPictureOfTheDayBeforeYesterday(apiKey, getDate(-2)).enqueue(callback)
         }
     }
 
@@ -61,11 +64,11 @@ class PictureOfTheDayViewModel(
         if (apiKey.isBlank())
             PictureOfTheDayData.Error(Throwable("Нет API key!"))
         else
-            pictureOfTheDayRetrofitImpl.getRetrofit().getPictureOfTheMars("100", "fhaz",apiKey)
+            pictureOfTheDayRetrofitImpl.getRetrofit().getPictureOfTheMars("100", "fhaz", apiKey)
                 .enqueue(callback)
     }
 
-    fun sendRequestTheEarthEPIC(){
+    fun sendRequestTheEarthEPIC() {
         liveData.postValue(PictureOfTheDayData.Loading(null))
         val apiKey: String = BuildConfig.NASA_API_KEY
         if (apiKey.isBlank())
@@ -75,17 +78,17 @@ class PictureOfTheDayViewModel(
                 .enqueue(callbackEPIC)
     }
 
-    private val callbackEPIC = object  : Callback<List<EarthServerResponseData>>{
+    private val callbackEPIC = object : Callback<List<EarthServerResponseData>> {
         override fun onResponse(
             call: Call<List<EarthServerResponseData>>,
             response: Response<List<EarthServerResponseData>>
         ) {
-            if (response.isSuccessful){
+            if (response.isSuccessful) {
                 response.body()?.let {
                     liveData.postValue(PictureOfTheDayData.SuccessEarth(it))
                 }
-            }else {
-                if (response.message().isNullOrEmpty()){
+            } else {
+                if (response.message().isNullOrEmpty()) {
                     liveData.postValue(PictureOfTheDayData.Error(Throwable("Неидентифицированное поле!")))
                 } else {
                     liveData.postValue(PictureOfTheDayData.Error(Throwable(response.message())))
@@ -104,12 +107,12 @@ class PictureOfTheDayViewModel(
             call: Call<PictureOfTheDayResponseData>,
             response: Response<PictureOfTheDayResponseData>
         ) {
-            if (response.isSuccessful){
+            if (response.isSuccessful) {
                 response.body()?.let {
                     liveData.postValue(PictureOfTheDayData.Success(it))
                 }
-            }else {
-                if (response.message().isNullOrEmpty()){
+            } else {
+                if (response.message().isNullOrEmpty()) {
                     liveData.postValue(PictureOfTheDayData.Error(Throwable("Неидентифицированное поле!")))
                 } else {
                     liveData.postValue(PictureOfTheDayData.Error(Throwable(response.message())))
@@ -123,7 +126,7 @@ class PictureOfTheDayViewModel(
 
     }
 
-    private fun getDate(int: Int): String{
+    private fun getDate(int: Int): String {
         val calendar: Calendar = Calendar.getInstance()
         calendar.add(Calendar.DATE, int)
         Log.d("@@@", sdf.format(calendar.time).toString())

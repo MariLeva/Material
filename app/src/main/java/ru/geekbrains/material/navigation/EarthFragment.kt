@@ -51,9 +51,6 @@ class EarthFragment : Fragment() {
                 is PictureOfTheDayData.Loading -> {
                     loadingLayout.visibility = View.VISIBLE
                 }
-                is PictureOfTheDayData.Success -> {
-                    //
-                }
                 is PictureOfTheDayData.SuccessEarth -> {
                     loadingLayout.visibility = View.GONE
                     tvCaption.text = pictureOfTheEarth.pictureResponseData.last().caption
@@ -66,6 +63,7 @@ class EarthFragment : Fragment() {
                             ".png?api_key=${BuildConfig.NASA_API_KEY}"
                     imageView.load(url)
                 }
+                else -> {}
             }
         }
     }

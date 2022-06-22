@@ -6,10 +6,11 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import ru.geekbrains.material.navigation.EarthFragment
 import ru.geekbrains.material.navigation.MarsFragment
 import ru.geekbrains.material.navigation.SystemFragment
+import ru.geekbrains.material.navigation.TehTransferFragment
 
 class ViewPagerAdapter (private val fm: FragmentManager): FragmentStatePagerAdapter(fm) {
 
-    private val fragment = arrayOf(EarthFragment(), MarsFragment(), SystemFragment())
+    private val fragment = arrayOf(EarthFragment(), MarsFragment(), TehTransferFragment(), SystemFragment())
 
     override fun getCount(): Int {
         return fragment.size
@@ -23,6 +24,7 @@ class ViewPagerAdapter (private val fm: FragmentManager): FragmentStatePagerAdap
         return when(position){
             0 -> "Earth"
             1 -> "Mars"
+            2 -> "NASA"
             else -> "System"
         }
     }

@@ -54,9 +54,7 @@ class MarsFragment : Fragment() {
                     val url = pictureOfTheMars.pictureOfTheDayResponseData.photos.first().imgSrc
                     imageView.load(url)
                 }
-                is PictureOfTheDayData.SuccessEarth ->{
-                    //
-                }
+                else -> {}
             }
         }
     }

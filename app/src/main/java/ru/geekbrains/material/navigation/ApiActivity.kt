@@ -48,7 +48,8 @@ class ApiActivity : AppCompatActivity() {
             setupWithViewPager(binding.viewPager)
             getTabAt(0)?.setIcon(R.drawable.ic_earth)
             getTabAt(1)?.setIcon(R.drawable.ic_mars)
-            getTabAt(2)?.setIcon(R.drawable.ic_system)
+            getTabAt(2)?.setIcon(R.drawable.is_nasa)
+            getTabAt(3)?.setIcon(R.drawable.ic_system)
         }
     }
 
