@@ -40,6 +40,7 @@
         app:constraint_referenced_ids="tv_caption,tv_text" />
 
     <ImageView
+        android:id="@+id/image_view"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/margin_15dp"
