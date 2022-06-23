@@ -17,14 +17,13 @@ import com.google.android.material.snackbar.Snackbar
 import ru.geekbrains.material.MainActivity
 import ru.geekbrains.material.R
 import ru.geekbrains.material.viewmodel.PictureOfTheDayViewModel
-import ru.geekbrains.material.databinding.FragmentPictureOfTheDayBinding
-import ru.geekbrains.material.navigation.ApiActivity
+import ru.geekbrains.material.databinding.FragmentPictureOfTheDayStartBinding
 import ru.geekbrains.material.settings.SettingsFragment
 
 class PictureOfTheDayFragment : Fragment() {
 
-    private var _binding: FragmentPictureOfTheDayBinding? = null
-    private val binding: FragmentPictureOfTheDayBinding
+    private var _binding: FragmentPictureOfTheDayStartBinding? = null
+    private val binding: FragmentPictureOfTheDayStartBinding
         get() = _binding!!
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
@@ -42,7 +41,7 @@ class PictureOfTheDayFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPictureOfTheDayBinding.inflate(inflater, container, false)
+        _binding = FragmentPictureOfTheDayStartBinding.inflate(inflater, container, false)
         return binding.root
     }
 
