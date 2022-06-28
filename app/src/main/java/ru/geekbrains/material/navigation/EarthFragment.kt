@@ -4,8 +4,7 @@ import android.graphics.RenderEffect
 import android.graphics.Shader
 import android.os.Build
 import android.os.Bundle
-import android.transition.Slide
-import android.transition.TransitionManager
+import android.transition.*
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +15,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import coil.load
+import coil.transition.Transition
 import ru.geekbrains.material.BuildConfig
 import ru.geekbrains.material.R
 import ru.geekbrains.material.databinding.FragmentEarthBinding
@@ -26,6 +26,8 @@ class EarthFragment : Fragment() {
 
     private var _binding: FragmentEarthBinding? = null
     private val binding: FragmentEarthBinding get() = _binding!!
+
+    private var isOpen: Boolean = false
 
     private val viewModel: PictureOfTheDayViewModel by lazy {
         ViewModelProvider(this).get(PictureOfTheDayViewModel::class.java)
@@ -60,17 +62,22 @@ class EarthFragment : Fragment() {
                 }
                 is PictureOfTheDayData.SuccessEarth -> {
                     loadingLayout.visibility = View.GONE
-                    val strDate = pictureOfTheEarth.pictureResponseData.last().date.split(" ").first()
+                    val strDate =
+                        pictureOfTheEarth.pictureResponseData.last().date.split(" ").first()
                     val image = pictureOfTheEarth.pictureResponseData.last().image
                     val url = "https://api.nasa.gov/EPIC/archive/natural/" +
-                            strDate.replace("-","/",true) +
+                            strDate.replace("-", "/", true) +
                             "/png/" +
                             "$image" +
                             ".png?api_key=${BuildConfig.NASA_API_KEY}"
                     imageView.load(url)
                     tvCaption.text = pictureOfTheEarth.pictureResponseData.last().caption
-                    TransitionManager.beginDelayedTransition(binding.earthLayout, Slide(Gravity.TOP))
+                    TransitionManager.beginDelayedTransition(
+                        binding.earthLayout,
+                        Slide(Gravity.TOP)
+                    )
                     binding.tvCaption.visibility = View.VISIBLE
+                    changeImageTransform()
                 }
                 else -> {}
             }
@@ -85,5 +92,23 @@ class EarthFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() = EarthFragment()
+    }
+
+    private fun changeImageTransform() {
+        binding.imageView.setOnClickListener {
+            isOpen =! isOpen
+            TransitionManager.beginDelayedTransition(
+                binding.earthLayout, TransitionSet()
+                    .addTransition(ChangeBounds())
+                    .addTransition(ChangeImageTransform())
+            )
+
+            val params: ViewGroup.LayoutParams = binding.imageView.layoutParams
+            params.height = if (isOpen) ViewGroup.LayoutParams.MATCH_PARENT else
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            binding.imageView.layoutParams = params
+            binding.imageView.scaleType = if (isOpen) ImageView.ScaleType.CENTER_CROP else
+                ImageView.ScaleType.FIT_CENTER
+        }
     }
 }
