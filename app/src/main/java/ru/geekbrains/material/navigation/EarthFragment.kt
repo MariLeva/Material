@@ -4,6 +4,9 @@ import android.graphics.RenderEffect
 import android.graphics.Shader
 import android.os.Build
 import android.os.Bundle
+import android.transition.Slide
+import android.transition.TransitionManager
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -57,7 +60,6 @@ class EarthFragment : Fragment() {
                 }
                 is PictureOfTheDayData.SuccessEarth -> {
                     loadingLayout.visibility = View.GONE
-                    tvCaption.text = pictureOfTheEarth.pictureResponseData.last().caption
                     val strDate = pictureOfTheEarth.pictureResponseData.last().date.split(" ").first()
                     val image = pictureOfTheEarth.pictureResponseData.last().image
                     val url = "https://api.nasa.gov/EPIC/archive/natural/" +
@@ -66,6 +68,9 @@ class EarthFragment : Fragment() {
                             "$image" +
                             ".png?api_key=${BuildConfig.NASA_API_KEY}"
                     imageView.load(url)
+                    tvCaption.text = pictureOfTheEarth.pictureResponseData.last().caption
+                    TransitionManager.beginDelayedTransition(binding.earthLayout, Slide(Gravity.TOP))
+                    binding.tvCaption.visibility = View.VISIBLE
                 }
                 else -> {}
             }

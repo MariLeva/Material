@@ -11,4 +11,5 @@
     <dimen name="width_height_indicator">8dp</dimen>
     <dimen name="margin_image_view_indicator">7dp</dimen>
     <dimen name="margin_15dp">15dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

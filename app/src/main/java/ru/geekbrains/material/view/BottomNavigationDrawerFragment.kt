@@ -1,9 +1,7 @@
 package ru.geekbrains.material.view
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.geekbrains.material.MainActivity
