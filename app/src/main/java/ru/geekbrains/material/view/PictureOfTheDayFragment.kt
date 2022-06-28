@@ -1,5 +1,6 @@
 package ru.geekbrains.material.view
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
@@ -25,6 +26,8 @@ class PictureOfTheDayFragment : Fragment() {
     private var _binding: FragmentPictureOfTheDayStartBinding? = null
     private val binding: FragmentPictureOfTheDayStartBinding
         get() = _binding!!
+    private var flag = false
+    private val duration: Long = 1000
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
@@ -67,6 +70,7 @@ class PictureOfTheDayFragment : Fragment() {
 
         (requireActivity() as MainActivity).setSupportActionBar(binding.bottomAppBar)
         setHasOptionsMenu(true)
+        setWiki()
 
         binding.chipGroup.setOnCheckedChangeListener { group, position ->
             when (position) {
@@ -129,6 +133,19 @@ class PictureOfTheDayFragment : Fragment() {
                 Snackbar.make(binding.pictureOfTheDay, "$slideOffset", Snackbar.LENGTH_INDEFINITE)
             }
         })
+    }
+
+    private fun setWiki(){
+        binding.wikiButton.setOnClickListener{
+            flag = !flag
+            if (flag){
+                ObjectAnimator.ofFloat(binding.wikiButton, View.ROTATION, 0f, 405f)
+                    .setDuration(duration).start()
+            } else{
+                ObjectAnimator.ofFloat(binding.wikiButton, View.ROTATION, 405f, 0f)
+                    .setDuration(duration).start()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
