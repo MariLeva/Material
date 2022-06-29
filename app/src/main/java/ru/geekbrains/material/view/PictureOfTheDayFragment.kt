@@ -15,6 +15,7 @@ import coil.load
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialSharedAxis
 import ru.geekbrains.material.MainActivity
 import ru.geekbrains.material.R
 import ru.geekbrains.material.viewmodel.PictureOfTheDayViewModel
@@ -45,6 +46,9 @@ class PictureOfTheDayFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPictureOfTheDayStartBinding.inflate(inflater, container, false)
+
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
         return binding.root
     }
 
@@ -159,8 +163,8 @@ class PictureOfTheDayFragment : Fragment() {
                 Log.d("@@@", "app_bar_fav")
             }
             R.id.app_bar_setting -> {
-                requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
-                    .add(R.id.container, SettingsFragment.newInstance()).commit()
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .add(R.id.container, SettingsFragment.newInstance()).addToBackStack("").commit()
             }
             android.R.id.home -> {
                 BottomNavigationDrawerFragment().show(

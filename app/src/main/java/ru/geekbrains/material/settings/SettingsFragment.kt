@@ -7,9 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.transition.MaterialSharedAxis
 import ru.geekbrains.material.*
 import ru.geekbrains.material.databinding.FragmentPictureOfTheDayBinding
 import ru.geekbrains.material.databinding.FragmentSettingsBinding
@@ -37,6 +39,9 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
         return binding.root
     }
 
@@ -50,10 +55,15 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         binding.rbThemePink.setOnClickListener(this)
         binding.rbThemeBlueGrey.setOnClickListener(this)
         binding.rbThemeBrown.setOnClickListener(this)
+
         when (parentActivity.getCurrentTheme()){
             1 -> binding.radioGroup.check(R.id.rb_theme_pink)
             2 -> binding.radioGroup.check(R.id.rb_theme_blue_grey)
             3 -> binding.radioGroup.check(R.id.rb_theme_brown)
+        }
+
+        binding.backButton.setOnClickListener{
+            requireActivity().onBackPressed()
         }
     }
 
