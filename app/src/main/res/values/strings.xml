@@ -42,4 +42,5 @@
         "increasing diversity in our future workforce.\n\n"
 
     </string>
- </resources>
+    <string name="navigation_recycler">Recycler View Activity</string>
+</resources>

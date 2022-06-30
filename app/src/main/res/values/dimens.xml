@@ -7,9 +7,11 @@
     <dimen name="bottom_sheet_behavior_peek">100dp</dimen>
     <dimen name="input_layout_width">0dp</dimen>
     <dimen name="text_size">16sp</dimen>
+    <dimen name="text_size_recycler">35sp</dimen>
     <dimen name="margin_navigation_view">8dp</dimen>
     <dimen name="width_height_indicator">8dp</dimen>
     <dimen name="margin_image_view_indicator">7dp</dimen>
     <dimen name="margin_15dp">15dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="recycler_image_view_w_h">120dp</dimen>
 </resources>

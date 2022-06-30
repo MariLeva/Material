@@ -8,6 +8,7 @@ import ru.geekbrains.material.MainActivity
 import ru.geekbrains.material.R
 import ru.geekbrains.material.databinding.BottomNavigationLayoutBinding
 import ru.geekbrains.material.navigation.ApiActivity
+import ru.geekbrains.material.view.recycler.RecyclerActivity
 
 class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
 
@@ -34,6 +35,11 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
                 }
                 R.id.navigation_two -> {
                     startActivity(Intent(requireContext(), ApiActivity::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
+                    true
+                }
+                R.id.navigation_recycler -> {
+                    startActivity(Intent(requireContext(), RecyclerActivity::class.java)
                         .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
                     true
                 }

@@ -7,6 +7,7 @@ import ru.geekbrains.material.MainActivity
 import ru.geekbrains.material.R
 import ru.geekbrains.material.databinding.ActivityApiBinding
 import ru.geekbrains.material.navigation.viewpager.ViewPagerAdapter
+import ru.geekbrains.material.view.recycler.RecyclerActivity
 
 class ApiActivity : AppCompatActivity() {
 
@@ -33,6 +34,10 @@ class ApiActivity : AppCompatActivity() {
                     startMainActivity()
                     true
                 }
+                R.id.navigation_recycler -> {
+                    startRecyclerActivity()
+                    true
+                }
                 else ->
                     true
             }
@@ -41,6 +46,10 @@ class ApiActivity : AppCompatActivity() {
 
     private fun startMainActivity() {
         startActivity(Intent(this, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
+    }
+
+    private fun startRecyclerActivity(){
+        startActivity(Intent(this, RecyclerActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
     }
 
     private fun initTabLayout() {
