@@ -15,19 +15,19 @@ const val TYPE_HEADER = 3
 class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private lateinit var list: List<DataRecycler>
+    private lateinit var list: MutableList<DataRecycler>
 
-    fun setList(newList: List<DataRecycler>){
-        this.list = newList
+    fun setList(newList: List<DataRecycler>) {
+        this.list = newList.toMutableList()
     }
 
-    fun serAddToList(newList: List<DataRecycler>, position: Int){
-        this.list = newList
+    fun serAddToList(newList: List<DataRecycler>, position: Int) {
+        this.list = newList.toMutableList()
         notifyItemChanged(position)
     }
 
-    fun setRemoveToList(newList: List<DataRecycler>, position: Int){
-        this.list = newList
+    fun setRemoveToList(newList: List<DataRecycler>, position: Int) {
+        this.list = newList.toMutableList()
         notifyItemRemoved(position)
     }
 
@@ -76,23 +76,35 @@ class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemCli
         }
     }
 
-    class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        fun myBind(data: DataRecycler){
+    class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun myBind(data: DataRecycler) {
             (ActivityRecyclerHeaderBinding.bind(itemView)).apply {
                 header.text = data.someText
             }
         }
     }
 
-    inner class MarsViewHolder(view: View): RecyclerView.ViewHolder(view){
-        fun myBind(data: DataRecycler){
+    inner class MarsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun myBind(data: DataRecycler) {
             (ActivityRecyclerMarsBinding.bind(itemView)).apply {
                 title.text = data.someText
-                addItemImageView.setOnClickListener{
+                addItemImageView.setOnClickListener {
                     onListItemClickListener.onAddBtnClick(layoutPosition)
                 }
                 removeItemImageView.setOnClickListener {
                     onListItemClickListener.onRemoveBtnClick(layoutPosition)
+                }
+                moveItemDown.setOnClickListener {
+                    list.removeAt(layoutPosition).apply {
+                        list.add(layoutPosition + 1, this)
+                    }
+                    notifyItemMoved(layoutPosition, layoutPosition + 1)
+                }
+                moveItemUp.setOnClickListener {
+                    list.removeAt(layoutPosition).apply {
+                        list.add(layoutPosition - 1, this)
+                    }
+                    notifyItemMoved(layoutPosition, layoutPosition - 1)
                 }
             }
         }
