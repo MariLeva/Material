@@ -15,35 +15,38 @@ class RecyclerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRecyclerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initNavigationBar()
 
         val list = arrayListOf(
+            DataRecycler("HEADER","", TYPE_HEADER),
             DataRecycler("Earth", "Earth des", TYPE_EARTH),
             DataRecycler("Earth", "Earth des", TYPE_EARTH),
             DataRecycler("Earth", "Earth des", TYPE_EARTH),
-            DataRecycler("Mars", "Mars des", TYPE_MARS),
+            DataRecycler("Mars", "", TYPE_MARS),
             DataRecycler("Earth", "Earth des", TYPE_EARTH),
             DataRecycler("Earth", "Earth des", TYPE_EARTH),
             DataRecycler("Earth", "Earth des", TYPE_EARTH),
-            DataRecycler("Earth", "Earth des", TYPE_EARTH)
+            DataRecycler("Mars", null, TYPE_MARS)
         )
         binding.recyclerView.adapter = RecyclerActivityAdapter(list)
-    }
 
-    override fun onResume() {
-        super.onResume()
-        binding.bottomNavigation.selectedItemId = R.id.navigation_recycler
-    }
-
-    private fun initNavigationBar() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_one -> {
-                    startMainActivity()
+                    startActivity(
+                        Intent(
+                            this,
+                            MainActivity::class.java
+                        ).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                    )
                     true
                 }
                 R.id.navigation_two -> {
-                    startApiActivity()
+                    startActivity(
+                        Intent(
+                            this,
+                            ApiActivity::class.java
+                        ).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                    )
                     true
                 }
                 else ->
@@ -52,11 +55,8 @@ class RecyclerActivity : AppCompatActivity() {
         }
     }
 
-    private fun startMainActivity() {
-        startActivity(Intent(this, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
-    }
-
-    private fun startApiActivity(){
-        startActivity(Intent(this, ApiActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
+    override fun onResume() {
+        super.onResume()
+        binding.bottomNavigation.selectedItemId = R.id.navigation_recycler
     }
 }

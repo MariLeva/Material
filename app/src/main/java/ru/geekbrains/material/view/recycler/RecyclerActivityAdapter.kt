@@ -5,10 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrains.material.databinding.ActivityRecyclerEarthBinding
+import ru.geekbrains.material.databinding.ActivityRecyclerHeaderBinding
 import ru.geekbrains.material.databinding.ActivityRecyclerMarsBinding
 
 const val TYPE_EARTH = 1
 const val TYPE_MARS = 2
+const val TYPE_HEADER = 3
 
 class RecyclerActivityAdapter(private var list: List<DataRecycler>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -22,6 +24,9 @@ class RecyclerActivityAdapter(private var list: List<DataRecycler>) :
             TYPE_MARS -> {
                 val view = ActivityRecyclerMarsBinding.inflate(LayoutInflater.from(parent.context))
                 MarsViewHolder(view.root)
+            }
+            TYPE_HEADER -> {
+                HeaderViewHolder(ActivityRecyclerHeaderBinding.inflate(LayoutInflater.from(parent.context)).root)
             }
             else -> {
                 val view =
@@ -60,6 +65,14 @@ class RecyclerActivityAdapter(private var list: List<DataRecycler>) :
         fun myBind(data: DataRecycler) {
             (ActivityRecyclerMarsBinding.bind(itemView)).apply {
                 title.text = data.someText
+            }
+        }
+    }
+
+    class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view){
+        fun myBind(data: DataRecycler){
+            (ActivityRecyclerHeaderBinding.bind(itemView)).apply {
+                header.text = data.someText
             }
         }
     }
