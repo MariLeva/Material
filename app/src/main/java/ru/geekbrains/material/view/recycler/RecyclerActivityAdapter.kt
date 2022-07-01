@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.internal.bind.DateTypeAdapter
 import ru.geekbrains.material.databinding.ActivityRecyclerEarthBinding
 import ru.geekbrains.material.databinding.ActivityRecyclerHeaderBinding
 import ru.geekbrains.material.databinding.ActivityRecyclerMarsBinding
@@ -15,18 +16,18 @@ const val TYPE_HEADER = 3
 class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private lateinit var list: MutableList<DataRecycler>
+    private lateinit var list: MutableList<Pair<DataRecycler, Boolean>>
 
-    fun setList(newList: List<DataRecycler>) {
+    fun setList(newList: List<Pair<DataRecycler, Boolean>>) {
         this.list = newList.toMutableList()
     }
 
-    fun serAddToList(newList: List<DataRecycler>, position: Int) {
+    fun serAddToList(newList: List<Pair<DataRecycler, Boolean>>, position: Int) {
         this.list = newList.toMutableList()
         notifyItemChanged(position)
     }
 
-    fun setRemoveToList(newList: List<DataRecycler>, position: Int) {
+    fun setRemoveToList(newList: List<Pair<DataRecycler, Boolean>>, position: Int) {
         this.list = newList.toMutableList()
         notifyItemRemoved(position)
     }
@@ -53,7 +54,7 @@ class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemCli
     }
 
     override fun getItemViewType(position: Int): Int {
-        return list[position].type
+        return list[position].first.type
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -68,26 +69,26 @@ class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemCli
     }
 
     class EarthViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun myBind(data: DataRecycler) {
+        fun myBind(listItem: Pair<DataRecycler, Boolean>) {
             (ActivityRecyclerEarthBinding.bind(itemView)).apply {
-                title.text = data.someText
-                descriptionTextView.text = data.someDescription
+                title.text = listItem.first.someText
+                descriptionTextView.text = listItem.first.someDescription
             }
         }
     }
 
     class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun myBind(data: DataRecycler) {
+        fun myBind(listItem: Pair<DataRecycler, Boolean>) {
             (ActivityRecyclerHeaderBinding.bind(itemView)).apply {
-                header.text = data.someText
+                header.text = listItem.first.someText
             }
         }
     }
 
     inner class MarsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun myBind(data: DataRecycler) {
+        fun myBind(listItem: Pair<DataRecycler, Boolean>) {
             (ActivityRecyclerMarsBinding.bind(itemView)).apply {
-                title.text = data.someText
+                title.text = listItem.first.someText
                 addItemImageView.setOnClickListener {
                     onListItemClickListener.onAddBtnClick(layoutPosition)
                 }
@@ -105,6 +106,12 @@ class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemCli
                         list.add(layoutPosition - 1, this)
                     }
                     notifyItemMoved(layoutPosition, layoutPosition - 1)
+                }
+                marsImageView.setOnClickListener {
+                    list[layoutPosition] = list[layoutPosition].let {
+                        it.first to !it.second
+                    }
+                    marsDescriptionTextView.visibility = if (list[layoutPosition].second) View.VISIBLE else View.GONE
                 }
             }
         }

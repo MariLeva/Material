@@ -14,13 +14,13 @@ class RecyclerActivity : AppCompatActivity(), OnListItemClickListener {
     lateinit var adapter: RecyclerActivityAdapter
 
     private var list = arrayListOf(
-        DataRecycler("HEADER", "", TYPE_HEADER),
-        DataRecycler("Earth", "Earth des", TYPE_EARTH),
-        DataRecycler("Earth", "Earth des", TYPE_EARTH),
-        DataRecycler("Earth", "Earth des", TYPE_EARTH),
-        DataRecycler("Mars", "", TYPE_MARS),
-        DataRecycler("Earth", "Earth des", TYPE_EARTH),
-        DataRecycler("Mars", null, TYPE_MARS)
+        Pair(DataRecycler("HEADER", "", TYPE_HEADER), false),
+        Pair(DataRecycler("Earth", "Earth des", TYPE_EARTH), false),
+        Pair(DataRecycler("Earth", "Earth des", TYPE_EARTH), false),
+        Pair(DataRecycler("Earth", "Earth des", TYPE_EARTH), false),
+        Pair(DataRecycler("Mars", "", TYPE_MARS), false),
+        Pair(DataRecycler("Earth", "Earth des", TYPE_EARTH), false),
+        Pair(DataRecycler("Mars", null, TYPE_MARS), false)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,7 +72,7 @@ class RecyclerActivity : AppCompatActivity(), OnListItemClickListener {
     }
 
     override fun onAddBtnClick(position: Int) {
-        list.add(position, DataRecycler("Mars", "Mars des", TYPE_MARS))
+        list.add(position, Pair(DataRecycler("Mars", "Mars des", TYPE_MARS), false))
         adapter.serAddToList(list, position)
     }
 
