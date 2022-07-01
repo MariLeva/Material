@@ -1,5 +1,6 @@
 package ru.geekbrains.material.view.recycler
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ const val TYPE_MARS = 2
 const val TYPE_HEADER = 3
 
 class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemClickListener) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(), ItemTouchHelperAdapter {
 
     private lateinit var list: MutableList<Pair<DataRecycler, Boolean>>
 
@@ -85,7 +86,7 @@ class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemCli
         }
     }
 
-    inner class MarsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class MarsViewHolder(view: View) : RecyclerView.ViewHolder(view), ItemTouchHelperViewHolder {
         fun myBind(listItem: Pair<DataRecycler, Boolean>) {
             (ActivityRecyclerMarsBinding.bind(itemView)).apply {
                 title.text = listItem.first.someText
@@ -115,5 +116,25 @@ class RecyclerActivityAdapter(private var onListItemClickListener: OnListItemCli
                 }
             }
         }
+
+        override fun onItemSelected() {
+            itemView.setBackgroundColor(Color.LTGRAY)
+        }
+
+        override fun onItemClear() {
+            itemView.setBackgroundColor(0)
+        }
+    }
+
+    override fun onItemMove(fromPosition: Int, toPosition: Int) {
+        list.removeAt(fromPosition).apply {
+            list.add(toPosition, this)
+        }
+        notifyItemMoved(fromPosition, toPosition)
+    }
+
+    override fun onItemDismiss(position: Int) {
+        list.removeAt(position)
+        notifyItemRemoved(position)
     }
 }

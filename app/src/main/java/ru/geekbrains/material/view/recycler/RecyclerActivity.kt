@@ -3,6 +3,7 @@ package ru.geekbrains.material.view.recycler
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import ru.geekbrains.material.MainActivity
 import ru.geekbrains.material.R
 import ru.geekbrains.material.databinding.ActivityRecyclerBinding
@@ -35,6 +36,8 @@ class RecyclerActivity : AppCompatActivity(), OnListItemClickListener {
         binding.recyclerActivityFAB.setOnClickListener {
             onAddBtnClick(list.size)
         }
+
+        ItemTouchHelper(ItemTouchHelperCallback(adapter)).attachToRecyclerView(binding.recyclerView)
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
