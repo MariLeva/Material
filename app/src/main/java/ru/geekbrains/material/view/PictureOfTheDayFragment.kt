@@ -15,6 +15,7 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.util.Log
 import android.view.*
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -126,8 +127,14 @@ class PictureOfTheDayFragment : Fragment() {
 
                     val spannedString: SpannedString
                     val spannableString: SpannableString = SpannableString(textSpannable)
-                    val spannableStringBuilder: SpannableStringBuilder =
+                    var spannableStringBuilder: SpannableStringBuilder =
                         SpannableStringBuilder(textSpannable)
+                    bottomSheetFragment.explanation.setText(
+                        spannableStringBuilder,
+                        TextView.BufferType.EDITABLE
+                    )
+                    spannableStringBuilder =
+                        bottomSheetFragment.explanation.text as SpannableStringBuilder
 
                     spannableStringBuilder.setSpan(
                         RelativeSizeSpan(2f),
@@ -156,10 +163,6 @@ class PictureOfTheDayFragment : Fragment() {
                         ),
                         21, textSpannable.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
                     )
-                    spannedString = SpannedString(spannableStringBuilder)
-
-                    bottomSheetFragment.explanation.text = spannedString
-
                 }
             }
         }
