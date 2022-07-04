@@ -41,5 +41,14 @@
     <color name="brown_800">#4E342E</color>
     <color name="brown_900">#3E2723</color>
 
+    <color name="red">#F44336</color>
+    <color name="orange">#FF9800</color>
+    <color name="yellow">#FFEB3B</color>
+    <color name="green">#4CAF50</color>
+    <color name="light_blue">#03A9F4</color>
+    <color name="blue">#3F51B5</color>
+    <color name="violet">#673AB7</color>
+
+
 </resources>
 

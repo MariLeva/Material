@@ -13,6 +13,7 @@ import android.text.SpannedString
 import android.text.style.*
 import android.util.Log
 import android.view.*
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -130,8 +131,14 @@ class PictureOfTheDayFragment : Fragment() {
 
                     val textSpannable = pictureOfTheDayData.pictureOfTheDayResponseData.explanation
                     val spannedString: SpannedString
-                    val spannableStringBuilder: SpannableStringBuilder =
+                    var spannableStringBuilder: SpannableStringBuilder =
                         SpannableStringBuilder(textSpannable)
+                    bottomSheetFragment.explanation.setText(
+                        spannableStringBuilder,
+                        TextView.BufferType.EDITABLE
+                    )
+                    spannableStringBuilder =
+                        bottomSheetFragment.explanation.text as SpannableStringBuilder
 
                     spannableStringBuilder.setSpan(
                         LeadingMarginSpan.Standard(15),
@@ -147,10 +154,30 @@ class PictureOfTheDayFragment : Fragment() {
                             SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
                     }
-                    spannedString = SpannedString(spannableStringBuilder)
-
-                    bottomSheetFragment.explanation.text = spannedString
-
+                    val listColor = arrayListOf(
+                        ContextCompat.getColor(requireActivity(), R.color.red),
+                        ContextCompat.getColor(requireActivity(), R.color.orange),
+                        ContextCompat.getColor(requireActivity(), R.color.yellow),
+                        ContextCompat.getColor(requireActivity(), R.color.green),
+                        ContextCompat.getColor(requireActivity(), R.color.light_blue),
+                        ContextCompat.getColor(requireActivity(), R.color.blue),
+                        ContextCompat.getColor(requireActivity(), R.color.violet)
+                    )
+                    var begin = 0
+                    while (begin < textSpannable.length - 1) {
+                        for (j in 0..listColor.size - 1) {
+                            val end = begin + 1
+                            if (end <= textSpannable.length) {
+                                spannableStringBuilder.setSpan(
+                                    ForegroundColorSpan(listColor[j]),
+                                    begin,
+                                    end,
+                                    SpannableString.SPAN_INCLUSIVE_INCLUSIVE
+                                )
+                                begin++
+                            }
+                        }
+                    }
                 }
             }
         }
