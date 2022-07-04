@@ -10,12 +10,9 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.SpannedString
-import android.text.style.BulletSpan
-import android.text.style.ForegroundColorSpan
-import android.text.style.RelativeSizeSpan
+import android.text.style.*
 import android.util.Log
 import android.view.*
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -118,51 +115,42 @@ class PictureOfTheDayFragment : Fragment() {
                 is PictureOfTheDayData.Success -> {
                     loadingLayout.visibility = View.GONE
                     imageView.load(pictureOfTheDayData.pictureOfTheDayResponseData.url)
-                    bottomSheetFragment.title.text =
-                        pictureOfTheDayData.pictureOfTheDayResponseData.title
                     bottomSheetFragment.title.typeface =
                         Typeface.createFromAsset(requireActivity().assets, "robotInvaders.ttf")
+                    val textSpannableTitle = pictureOfTheDayData.pictureOfTheDayResponseData.title
+
+                    val spannableString: SpannableString = SpannableString(textSpannableTitle)
+                    spannableString.setSpan(
+                        StyleSpan(Typeface.BOLD_ITALIC),
+                        0,
+                        textSpannableTitle.length,
+                        SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    bottomSheetFragment.title.text = textSpannableTitle
 
                     val textSpannable = pictureOfTheDayData.pictureOfTheDayResponseData.explanation
-
                     val spannedString: SpannedString
-                    val spannableString: SpannableString = SpannableString(textSpannable)
-                    var spannableStringBuilder: SpannableStringBuilder =
+                    val spannableStringBuilder: SpannableStringBuilder =
                         SpannableStringBuilder(textSpannable)
-                    bottomSheetFragment.explanation.setText(
-                        spannableStringBuilder,
-                        TextView.BufferType.EDITABLE
-                    )
-                    spannableStringBuilder =
-                        bottomSheetFragment.explanation.text as SpannableStringBuilder
 
                     spannableStringBuilder.setSpan(
-                        RelativeSizeSpan(2f),
+                        LeadingMarginSpan.Standard(15),
                         0,
-                        spannableStringBuilder.length,
-                        SpannableString.SPAN_EXCLUSIVE_INCLUSIVE
+                        textSpannable.length,
+                        SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
                     )
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        spannableStringBuilder.setSpan(
+                            LineHeightSpan.Standard(80),
+                            0,
+                            textSpannable.length,
+                            SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    }
+                    spannedString = SpannedString(spannableStringBuilder)
 
-                    spannableStringBuilder.setSpan(
-                        ForegroundColorSpan(
-                            ContextCompat.getColor(
-                                requireContext(),
-                                R.color.pink_700
-                            )
-                        ),
-                        8, 19, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE
-                    )
-                    spannableStringBuilder.insert(19, "NEW")
+                    bottomSheetFragment.explanation.text = spannedString
 
-                    spannableStringBuilder.setSpan(
-                        ForegroundColorSpan(
-                            ContextCompat.getColor(
-                                requireContext(),
-                                R.color.brown_700
-                            )
-                        ),
-                        21, textSpannable.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
                 }
             }
         }
