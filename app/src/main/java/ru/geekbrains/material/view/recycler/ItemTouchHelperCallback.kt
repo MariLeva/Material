@@ -6,6 +6,13 @@ import androidx.recyclerview.widget.RecyclerView
 class ItemTouchHelperCallback(private val itemTouchHelperAdapter: ItemTouchHelperAdapter) :
     ItemTouchHelper.Callback() {
 
+    override fun isLongPressDragEnabled(): Boolean {
+        return true
+    }
+
+    override fun isItemViewSwipeEnabled(): Boolean {
+        return true
+    }
 
     override fun getMovementFlags(
         recyclerView: RecyclerView,

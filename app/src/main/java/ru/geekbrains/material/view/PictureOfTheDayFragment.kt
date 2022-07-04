@@ -2,6 +2,7 @@ package ru.geekbrains.material.view
 
 import android.animation.ObjectAnimator
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -110,6 +111,7 @@ class PictureOfTheDayFragment : Fragment() {
                     imageView.load(pictureOfTheDayData.pictureOfTheDayResponseData.url)
                     bottomSheetFragment.title.text =
                         pictureOfTheDayData.pictureOfTheDayResponseData.title
+                    bottomSheetFragment.title.typeface = Typeface.createFromAsset(requireActivity().assets, "robotInvaders.ttf")
                     bottomSheetFragment.explanation.text =
                         pictureOfTheDayData.pictureOfTheDayResponseData.explanation
                 }
