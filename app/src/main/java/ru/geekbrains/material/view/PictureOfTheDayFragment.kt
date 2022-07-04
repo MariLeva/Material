@@ -12,6 +12,7 @@ import android.text.SpannableStringBuilder
 import android.text.SpannedString
 import android.text.style.BulletSpan
 import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
 import android.util.Log
 import android.view.*
 import android.widget.Toast
@@ -121,49 +122,44 @@ class PictureOfTheDayFragment : Fragment() {
                     bottomSheetFragment.title.typeface =
                         Typeface.createFromAsset(requireActivity().assets, "robotInvaders.ttf")
 
-                    val textSpannable = "My text \nbullet one \nbullet two"
+                    val textSpannable = pictureOfTheDayData.pictureOfTheDayResponseData.explanation
+
                     val spannedString: SpannedString
                     val spannableString: SpannableString = SpannableString(textSpannable)
-                    val spannableStringBuilder: SpannableStringBuilder
+                    val spannableStringBuilder: SpannableStringBuilder =
+                        SpannableStringBuilder(textSpannable)
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                        spannableString.setSpan(
-                            BulletSpan(
-                                20,
-                                ContextCompat.getColor(requireContext(), R.color.pink_700),
-                                10
-                            ),
-                            9, 18, SpannedString.SPAN_EXCLUSIVE_EXCLUSIVE
-                        )
-                        spannableString.setSpan(
-                            BulletSpan(
-                                20,
-                                ContextCompat.getColor(requireContext(), R.color.pink_700),
-                                10
-                            ),
-                            21, textSpannable.length, SpannedString.SPAN_EXCLUSIVE_EXCLUSIVE
-                        )
-                    } else {
-                        spannableString.setSpan(
-                            BulletSpan(
-                                20,
-                                ContextCompat.getColor(requireContext(), R.color.pink_700)
-                            ),
-                            9, 19, SpannedString.SPAN_EXCLUSIVE_EXCLUSIVE
-                        )
-                    }
-                    spannableString.setSpan(
+                    spannableStringBuilder.setSpan(
+                        RelativeSizeSpan(2f),
+                        0,
+                        spannableStringBuilder.length,
+                        SpannableString.SPAN_EXCLUSIVE_INCLUSIVE
+                    )
+
+                    spannableStringBuilder.setSpan(
                         ForegroundColorSpan(
                             ContextCompat.getColor(
                                 requireContext(),
                                 R.color.pink_700
                             )
                         ),
-                        9, 19, SpannedString.SPAN_EXCLUSIVE_EXCLUSIVE
+                        8, 19, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE
                     )
+                    spannableStringBuilder.insert(19, "NEW")
 
-                    bottomSheetFragment.explanation.text = spannableString
-                     //   pictureOfTheDayData.pictureOfTheDayResponseData.explanation
+                    spannableStringBuilder.setSpan(
+                        ForegroundColorSpan(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.brown_700
+                            )
+                        ),
+                        21, textSpannable.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    spannedString = SpannedString(spannableStringBuilder)
+
+                    bottomSheetFragment.explanation.text = spannedString
+
                 }
             }
         }
